@@ -1,0 +1,8 @@
+{
+  "OutputFoldersPerTargetSystem": {
+    "Local Machine": [
+      "music_player\\windows\\out\\build\\x64-Debug",
+      "music_player\\windows\\out\\install\\x64-Debug"
+    ]
+  }
+}

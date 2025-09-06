@@ -1,0 +1,24 @@
+# ninja log v6
+7	103	7788485265205929	nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-mkdir	22a94385e4f4c30d
+1038	1124	7788485275435688	nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-update	4353a998661bf73
+1214	1334	7788485277535449	C:/Users/wangd/RiderProjects/musicplayerapp/music_player/windows/out/build/x64-Debug/_deps/nuget-src/nuget.exe	aedce58368edb1e3
+1124	1213	7788485276316636	C:/Users/wangd/RiderProjects/musicplayerapp/music_player/windows/out/build/x64-Debug/_deps/nuget-subbuild/nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-patch	52ac2bf5687b8482
+7	103	7788485265205929	C:/Users/wangd/RiderProjects/musicplayerapp/music_player/windows/out/build/x64-Debug/_deps/nuget-subbuild/nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-mkdir	22a94385e4f4c30d
+1038	1124	7788485275435688	C:/Users/wangd/RiderProjects/musicplayerapp/music_player/windows/out/build/x64-Debug/_deps/nuget-subbuild/nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-update	4353a998661bf73
+1124	1213	7788485276316636	nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-patch	52ac2bf5687b8482
+104	1037	7788485274560691	nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-download	60a44c8b464e72f9
+104	1037	7788485274560691	C:/Users/wangd/RiderProjects/musicplayerapp/music_player/windows/out/build/x64-Debug/_deps/nuget-subbuild/nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-download	60a44c8b464e72f9
+1214	1334	7788485277535449	nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-copyfile	aedce58368edb1e3
+1423	1511	7788485279305529	C:/Users/wangd/RiderProjects/musicplayerapp/music_player/windows/out/build/x64-Debug/_deps/nuget-subbuild/nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-build	f783985752b16b62
+1214	1334	7788485277535449	C:/Users/wangd/RiderProjects/musicplayerapp/music_player/windows/out/build/x64-Debug/_deps/nuget-subbuild/nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-copyfile	aedce58368edb1e3
+1335	1422	7788485278405738	nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-configure	f457354983443a66
+1600	1688	7788485281073099	C:/Users/wangd/RiderProjects/musicplayerapp/music_player/windows/out/build/x64-Debug/_deps/nuget-subbuild/nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-test	823f3cb3b742de56
+1688	1814	7788485282321453	C:/Users/wangd/RiderProjects/musicplayerapp/music_player/windows/out/build/x64-Debug/_deps/nuget-subbuild/CMakeFiles/nuget-populate-complete	46fa9a5c978de014
+1335	1422	7788485278405738	C:/Users/wangd/RiderProjects/musicplayerapp/music_player/windows/out/build/x64-Debug/_deps/nuget-subbuild/nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-configure	f457354983443a66
+1423	1511	7788485279305529	nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-build	f783985752b16b62
+1512	1599	7788485280175877	nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-install	69e00de844448b36
+1512	1599	7788485280175877	C:/Users/wangd/RiderProjects/musicplayerapp/music_player/windows/out/build/x64-Debug/_deps/nuget-subbuild/nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-install	69e00de844448b36
+1600	1688	7788485281073099	nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-test	823f3cb3b742de56
+1688	1814	7788485282321453	CMakeFiles/nuget-populate-complete	46fa9a5c978de014
+1688	1814	7788485282321453	C:/Users/wangd/RiderProjects/musicplayerapp/music_player/windows/out/build/x64-Debug/_deps/nuget-subbuild/nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-done	46fa9a5c978de014
+1688	1814	7788485282321453	nuget-populate-prefix/src/nuget-populate-stamp/nuget-populate-done	46fa9a5c978de014
