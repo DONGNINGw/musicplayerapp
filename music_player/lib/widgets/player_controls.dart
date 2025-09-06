@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/audio_service.dart';
+import '../services/playlist_service.dart';
 
 /// 播放器控制组件
 /// 包含播放/暂停/停止按钮和进度条
 class PlayerControls extends StatelessWidget {
-  const PlayerControls({Key? key}) : super(key: key);
+  const PlayerControls({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AudioPlayerService>(
-      builder: (context, audioService, child) {
+    return Consumer2<AudioPlayerService, PlaylistService>(
+      builder: (context, audioService, playlistService, child) {
         return Container(
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
@@ -30,13 +31,13 @@ class PlayerControls extends StatelessWidget {
               // 进度条
               _buildProgressBar(audioService),
               const SizedBox(height: 16),
-              
+
               // 控制按钮
-              _buildControlButtons(audioService),
+              _buildControlButtons(audioService, playlistService),
               const SizedBox(height: 16),
-              
+
               // 音量控制
-              _buildVolumeControl(audioService),
+              _buildVolumeControl(audioService, playlistService),
             ],
           ),
         );
@@ -57,19 +58,21 @@ class PlayerControls extends StatelessWidget {
             inactiveTrackColor: Colors.grey[300],
           ),
           child: Slider(
-            value: audioService.duration.inMilliseconds > 0
-                ? audioService.position.inMilliseconds /
-                    audioService.duration.inMilliseconds
-                : 0.0,
+            value:
+                audioService.duration.inMilliseconds > 0
+                    ? audioService.position.inMilliseconds /
+                        audioService.duration.inMilliseconds
+                    : 0.0,
             onChanged: (value) {
               final position = Duration(
-                milliseconds: (value * audioService.duration.inMilliseconds).round(),
+                milliseconds:
+                    (value * audioService.duration.inMilliseconds).round(),
               );
               audioService.seek(position);
             },
           ),
         ),
-        
+
         // 时间显示
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -92,30 +95,38 @@ class PlayerControls extends StatelessWidget {
   }
 
   /// 构建控制按钮
-  Widget _buildControlButtons(AudioPlayerService audioService) {
+  Widget _buildControlButtons(
+    AudioPlayerService audioService,
+    PlaylistService playlistService,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        // 停止按钮
+        // 上一首按钮
         IconButton(
-          onPressed: audioService.currentFilePath != null
-              ? () => audioService.stop()
-              : null,
-          icon: const Icon(Icons.stop),
+          onPressed:
+              playlistService.hasPrevious
+                  ? () => _playPrevious(audioService, playlistService)
+                  : null,
+          icon: const Icon(Icons.skip_previous),
           iconSize: 32,
-          color: Colors.red,
+          color:
+              playlistService.hasPrevious ? Colors.grey[600] : Colors.grey[400],
         ),
-        
+
         // 播放/暂停按钮
         Container(
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
           child: IconButton(
-            onPressed: audioService.currentFilePath != null
-                ? () => audioService.togglePlayPause()
-                : null,
+            onPressed: () {
+              if (audioService.isPlaying) {
+                audioService.pause();
+              } else if (audioService.currentFilePath != null) {
+                audioService.resume();
+              } else if (playlistService.currentSong != null) {
+                audioService.playAudio(playlistService.currentSong!.path);
+              }
+            },
             icon: Icon(
               audioService.isPlaying ? Icons.pause : Icons.play_arrow,
               color: Colors.white,
@@ -123,20 +134,26 @@ class PlayerControls extends StatelessWidget {
             iconSize: 40,
           ),
         ),
-        
-        // 占位按钮（未来可添加下一首功能）
+
+        // 下一首按钮
         IconButton(
-          onPressed: null,
+          onPressed:
+              playlistService.hasNext
+                  ? () => _playNext(audioService, playlistService)
+                  : null,
           icon: const Icon(Icons.skip_next),
           iconSize: 32,
-          color: Colors.grey,
+          color: playlistService.hasNext ? Colors.grey[600] : Colors.grey[400],
         ),
       ],
     );
   }
 
   /// 构建音量控制
-  Widget _buildVolumeControl(AudioPlayerService audioService) {
+  Widget _buildVolumeControl(
+    AudioPlayerService audioService,
+    PlaylistService playlistService,
+  ) {
     return Row(
       children: [
         const Icon(Icons.volume_down, color: Colors.grey),
@@ -157,8 +174,61 @@ class PlayerControls extends StatelessWidget {
           ),
         ),
         const Icon(Icons.volume_up, color: Colors.grey),
+        const SizedBox(width: 16),
+        // 播放模式控制
+        _buildPlayModeControls(playlistService),
       ],
     );
+  }
+
+  /// 构建播放模式控制
+  Widget _buildPlayModeControls(PlaylistService playlistService) {
+    return Row(
+      children: [
+        // 随机播放按钮
+        IconButton(
+          onPressed: playlistService.toggleShuffleMode,
+          icon: Icon(
+            Icons.shuffle,
+            color:
+                playlistService.isShuffleMode ? Colors.blue : Colors.grey[600],
+          ),
+          tooltip: playlistService.isShuffleMode ? '关闭随机播放' : '开启随机播放',
+        ),
+        // 重复播放按钮
+        IconButton(
+          onPressed: playlistService.toggleRepeatMode,
+          icon: Icon(
+            Icons.repeat,
+            color:
+                playlistService.isRepeatMode ? Colors.blue : Colors.grey[600],
+          ),
+          tooltip: playlistService.isRepeatMode ? '关闭重复播放' : '开启重复播放',
+        ),
+      ],
+    );
+  }
+
+  /// 播放上一首
+  void _playPrevious(
+    AudioPlayerService audioService,
+    PlaylistService playlistService,
+  ) {
+    final previousSong = playlistService.playPrevious();
+    if (previousSong != null) {
+      audioService.playAudio(previousSong.path);
+    }
+  }
+
+  /// 播放下一首
+  void _playNext(
+    AudioPlayerService audioService,
+    PlaylistService playlistService,
+  ) {
+    final nextSong = playlistService.playNext();
+    if (nextSong != null) {
+      audioService.playAudio(nextSong.path);
+    }
   }
 
   /// 格式化时间显示

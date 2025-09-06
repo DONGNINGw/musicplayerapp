@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'services/audio_service.dart';
+import 'services/file_service.dart';
+import 'services/playlist_service.dart';
 import 'widgets/player_controls.dart';
 import 'widgets/file_picker_widget.dart';
+import 'widgets/file_scanner_widget.dart';
+import 'widgets/playlist_widget.dart';
 
 void main() {
   runApp(const MusicPlayerApp());
@@ -13,8 +17,12 @@ class MusicPlayerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AudioPlayerService(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AudioPlayerService()),
+        ChangeNotifierProvider(create: (context) => FileService()),
+        ChangeNotifierProvider(create: (context) => PlaylistService()),
+      ],
       child: MaterialApp(
         title: '音乐播放器',
         theme: ThemeData(
@@ -37,10 +45,7 @@ class MusicPlayerHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           '音乐播放器',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: Colors.blue,
         elevation: 0,
@@ -51,10 +56,7 @@ class MusicPlayerHomePage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Colors.blue.withOpacity(0.1),
-              Colors.white,
-            ],
+            colors: [Colors.blue.withOpacity(0.1), Colors.white],
           ),
         ),
         child: SafeArea(
@@ -66,18 +68,24 @@ class MusicPlayerHomePage extends StatelessWidget {
                 // 应用标题和描述
                 _buildHeader(),
                 const SizedBox(height: 24),
-                
+
                 // 文件选择器
                 const FilePickerWidget(),
-                const SizedBox(height: 24),
-                
+                const SizedBox(height: 20),
+
+                // 文件扫描组件
+                const FileScannerWidget(),
+                const SizedBox(height: 20),
+
+                // 播放列表组件
+                const PlaylistWidget(),
+                const SizedBox(height: 20),
+
                 // 播放器控制面板
-                const Expanded(
-                  child: PlayerControls(),
-                ),
-                
+                const Expanded(child: PlayerControls()),
+
                 const SizedBox(height: 16),
-                
+
                 // 底部信息
                 _buildFooter(),
               ],
@@ -105,11 +113,7 @@ class MusicPlayerHomePage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(
-            Icons.music_note,
-            size: 48,
-            color: Colors.blue,
-          ),
+          Icon(Icons.music_note, size: 48, color: Colors.blue),
           const SizedBox(height: 8),
           const Text(
             '欢迎使用音乐播放器',
@@ -122,10 +126,7 @@ class MusicPlayerHomePage extends StatelessWidget {
           const SizedBox(height: 4),
           const Text(
             '选择您喜欢的音频文件开始播放',
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey,
-            ),
+            style: TextStyle(fontSize: 14, color: Colors.grey),
           ),
         ],
       ),
@@ -137,12 +138,9 @@ class MusicPlayerHomePage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: const Text(
-        'Version 1.0 - 第一天开发成果',
+        'Version 1.1 - 第二天开发成果',
         textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 12,
-          color: Colors.grey,
-        ),
+        style: TextStyle(fontSize: 12, color: Colors.grey),
       ),
     );
   }

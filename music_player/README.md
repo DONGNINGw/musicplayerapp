@@ -1,4 +1,4 @@
-# 音乐播放器 - 第一天开发成果
+# 音乐播放器 - 第二天开发成果
 
 ## 项目概述
 
@@ -12,6 +12,13 @@
 - **AUD-02**: 实现播放/暂停/停止控制逻辑
 - **项目基础架构**: 完整的Flutter项目结构
 - **依赖配置**: 音频播放相关依赖包配置
+
+### 第二天任务 (2025-09-06)
+
+- **FILE-01**: 实现文件扫描功能
+- **PLAYLIST-01**: 创建播放列表基础功能
+- **AUD-03**: 增强播放控制（上一首/下一首）
+- **AUD-04**: 实现播放模式（随机/重复）
 
 ## 核心功能
 
@@ -37,14 +44,20 @@
 
 ```
 lib/
-├── main.dart                 # 应用入口
+├── main.dart                    # 应用入口
+├── models/
+│   └── playlist_model.dart      # 播放列表模型
 ├── services/
-│   └── audio_service.dart    # 音频播放服务
+│   ├── audio_service.dart       # 音频播放服务
+│   ├── file_service.dart        # 文件管理服务
+│   └── playlist_service.dart    # 播放列表服务
 └── widgets/
-    ├── player_controls.dart  # 播放控制组件
-    └── file_picker_widget.dart # 文件选择组件
+    ├── player_controls.dart     # 播放控制组件
+    ├── file_picker_widget.dart  # 文件选择组件
+    ├── file_scanner_widget.dart # 文件扫描组件
+    └── playlist_widget.dart     # 播放列表组件
 test/
-└── player_core_test.dart     # 核心功能测试
+└── player_core_test.dart        # 核心功能测试
 ```
 
 ## 依赖包
@@ -89,10 +102,16 @@ flutter test test/player_core_test.dart
 - [x] 项目架构设计
 - [x] UI界面实现
 
-### 📋 下一步计划 (第2天)
-- [ ] 文件扫描功能 (FILE-01)
-- [ ] 进度控制优化 (AUD-03)
-- [ ] 音量控制完善 (AUD-04)
+### ✅ Sprint 1 - 第2天 (2025-09-06)
+- [x] 文件扫描功能 (FILE-01)
+- [x] 播放列表基础功能 (PLAYLIST-01)
+- [x] 增强播放控制 (AUD-03)
+- [x] 播放模式实现 (AUD-04)
+
+### 📋 下一步计划 (第3天)
+- [ ] 歌词显示功能 (LYRIC-01)
+- [ ] 音频元数据解析 (META-01)
+- [ ] 播放历史记录 (HIST-01)
 
 ## 技术特点
 
@@ -110,9 +129,9 @@ flutter test test/player_core_test.dart
 
 ## 版本信息
 
-- **当前版本**: 1.0.0+1
+- **当前版本**: 1.1.0+2
 - **Flutter版本**: >=3.0.0
-- **开发状态**: 第一天完成
+- **开发状态**: 第二天完成
 
 ---
 

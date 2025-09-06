@@ -6,7 +6,7 @@ import '../services/audio_service.dart';
 /// 文件选择器组件
 /// 用于选择音频文件并开始播放
 class FilePickerWidget extends StatelessWidget {
-  const FilePickerWidget({Key? key}) : super(key: key);
+  const FilePickerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +20,14 @@ class FilePickerWidget extends StatelessWidget {
               // 当前播放文件信息
               if (audioService.currentFilePath != null)
                 _buildCurrentFileInfo(audioService),
-              
+
               const SizedBox(height: 16),
-              
+
               // 选择文件按钮
               _buildFilePickerButton(context, audioService),
-              
+
               const SizedBox(height: 16),
-              
+
               // 支持的格式说明
               _buildSupportedFormats(),
             ],
@@ -39,10 +39,11 @@ class FilePickerWidget extends StatelessWidget {
 
   /// 构建当前文件信息显示
   Widget _buildCurrentFileInfo(AudioPlayerService audioService) {
-    final fileName = audioService.currentFilePath?.split('\\').last ?? 
-                    audioService.currentFilePath?.split('/').last ?? 
-                    '未知文件';
-    
+    final fileName =
+        audioService.currentFilePath?.split('\\').last ??
+        audioService.currentFilePath?.split('/').last ??
+        '未知文件';
+
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -74,7 +75,11 @@ class FilePickerWidget extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            '状态: ${audioService.isPlaying ? "播放中" : audioService.isPaused ? "已暂停" : "已停止"}',
+            '状态: ${audioService.isPlaying
+                ? "播放中"
+                : audioService.isPaused
+                ? "已暂停"
+                : "已停止"}',
             style: TextStyle(
               fontSize: 12,
               color: audioService.isPlaying ? Colors.green : Colors.grey,
@@ -86,7 +91,10 @@ class FilePickerWidget extends StatelessWidget {
   }
 
   /// 构建文件选择按钮
-  Widget _buildFilePickerButton(BuildContext context, AudioPlayerService audioService) {
+  Widget _buildFilePickerButton(
+    BuildContext context,
+    AudioPlayerService audioService,
+  ) {
     return ElevatedButton.icon(
       onPressed: () => _pickAndPlayFile(context, audioService),
       icon: const Icon(Icons.folder_open),
@@ -95,9 +103,7 @@ class FilePickerWidget extends StatelessWidget {
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     );
   }
@@ -124,10 +130,7 @@ class FilePickerWidget extends StatelessWidget {
           const SizedBox(height: 4),
           const Text(
             'MP3, WAV, FLAC, AAC, OGG, M4A',
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey,
-            ),
+            style: TextStyle(fontSize: 12, color: Colors.grey),
           ),
         ],
       ),
@@ -135,15 +138,16 @@ class FilePickerWidget extends StatelessWidget {
   }
 
   /// 选择并播放文件
-  Future<void> _pickAndPlayFile(BuildContext context, AudioPlayerService audioService) async {
+  Future<void> _pickAndPlayFile(
+    BuildContext context,
+    AudioPlayerService audioService,
+  ) async {
     try {
       // 显示加载指示器
       showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        builder: (context) => const Center(child: CircularProgressIndicator()),
       );
 
       // 选择文件
@@ -157,10 +161,10 @@ class FilePickerWidget extends StatelessWidget {
 
       if (result != null && result.files.single.path != null) {
         final filePath = result.files.single.path!;
-        
+
         // 播放选中的文件
         await audioService.playAudio(filePath);
-        
+
         // 显示成功消息
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -173,7 +177,7 @@ class FilePickerWidget extends StatelessWidget {
     } catch (e) {
       // 关闭可能存在的加载指示器
       Navigator.of(context).pop();
-      
+
       // 显示错误消息
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
